@@ -9,8 +9,4 @@
         update_cache: yes
 
   roles:
-    # - nginxinc.nginx
-    # -  diff_os
-    # - nginx_first_setup
-    # - lets_encrypt
     - nginx_balancer_and_web
