@@ -1,0 +1,14 @@
+---
+ - name: reload nginx
+   systemd:
+     name: nginx
+     state: reloaded
+
+ - name: status nginx 
+   shell: nginx -t
+   register: nginx_status
+
+ - name: nginx status debug
+   debug:
+     msg: "{{ nginx_status.stderr }}"
+

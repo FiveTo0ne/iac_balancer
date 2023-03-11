@@ -1,0 +1,14 @@
+server {
+  listen 80;
+  server_name  {{ hostvars['web'].fqdn }};
+  root /etc/nginx/;
+  index index.html;
+
+
+
+  location / {  }
+
+
+
+}
+

@@ -1,0 +1,8 @@
+---
+- include_tasks: balancer.yml
+  when: inventory_hostname in groups["balancer"]
+
+- include_tasks: web.yml
+  when: inventory_hostname in groups["web"]
+
+# tasks file for nginx_balancer_and_web

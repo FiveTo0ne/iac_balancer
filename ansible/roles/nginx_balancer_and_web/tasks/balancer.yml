@@ -1,0 +1,31 @@
+---
+- name: Update apt cache.
+  apt: update_cache=yes cache_valid_time=86400
+  changed_when: false
+
+- name: Install nginx
+  apt:
+    name: nginx=1.18.0-0ubuntu1.3
+    state: present
+
+- name: start nginx
+  systemd:
+    name: nginx
+    state: restarted
+    enabled: yes
+    daemon_reload: yes
+
+- name: copy nginx.conf
+  template:
+    src: ../nginx_balancer_and_web/templates/balancer.conf.j2
+    dest: /etc/nginx/nginx.conf
+    mode: 0644
+  notify: 
+  -  reload nginx
+  -  status nginx
+  -  nginx status debug
+
+
+
+
+

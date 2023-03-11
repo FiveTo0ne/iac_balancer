@@ -1,0 +1,48 @@
+---
+    - name: Install nginx
+      apt:
+        name: nginx=1.18.0-0ubuntu1.3
+        state: present
+    
+    - name: start nginx
+      systemd:
+        name: nginx
+        state: restarted
+        enabled: yes
+        daemon_reload: yes
+
+    - name: copy nginx.conf
+      template:
+        src: ../nginx_balancer_and_web/templates/nginx.conf.j2
+        dest: /etc/nginx/nginx.conf
+        mode: 0644
+      notify: 
+      -  reload nginx
+      -  status nginx
+      -  nginx status debug
+
+    - name: copy etc/nginx/conf.d/*.conf
+      template:
+        src: ../nginx_balancer_and_web/templates/backend.conf.j2
+        dest: /etc/nginx/conf.d/backend.conf
+        mode: 0644
+      notify: 
+      -  reload nginx
+      -  status nginx
+      -  nginx status debug
+
+    - name: copy index.html
+      template:
+        src: ../nginx_balancer_and_web/templates/index.html.j2
+        dest: /etc/nginx/index.html
+        mode: 0644
+      notify: 
+      -  reload nginx
+      -  status nginx
+      -  nginx status debug
+
+    - name: open port 80
+      ufw:
+        rule: allow
+        port: "80"
+

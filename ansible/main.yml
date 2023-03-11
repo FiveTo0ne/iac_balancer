@@ -1,0 +1,16 @@
+---
+- name: Install nginx
+  hosts: all
+  become: yes
+
+  pre_tasks:
+    - name: Update cache
+      apt:
+        update_cache: yes
+
+  roles:
+    # - nginxinc.nginx
+    # -  diff_os
+    # - nginx_first_setup
+    # - lets_encrypt
+    - nginx_balancer_and_web
